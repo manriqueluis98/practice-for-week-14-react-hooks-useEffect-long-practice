@@ -3,7 +3,7 @@ import Message from "./components/Message";
 import PictureDisplay from "./components/PictureDisplay";
 
 function App() {
-  const [size, setSize] = useState('s');
+  const [size, setSize] = useState('m');
   const [featherCount, setFeatherCount] = useState(0);
   const [featherColors, setFeatherColors] = useState([]);
   const [isRed, setIsRed] = useState(false);
@@ -11,6 +11,33 @@ function App() {
   const [isBrown, setIsBrown] = useState(false);
   const [isLightBrown, setIsLightBrown] = useState(false);
   const [isYellow, setIsYellow] = useState(false);
+
+  const [sizeClass, setSizeClass] = useState('')
+
+
+  useEffect(() => {
+    console.log('Message', size);
+
+    let cname = '';
+    switch (size) {
+        case 'm':
+            cname = 'medium';
+            break;
+        case 'l':
+            cname = 'large';
+            break;
+        case 'xl':
+            cname = 'xlarge';
+            break;
+        default:
+            cname = 'small';
+            break;
+    }
+    //console.log(cname);
+
+    setSizeClass(cname);
+
+  }, [size])
 
 
   useEffect(() => {
@@ -32,10 +59,10 @@ function App() {
       {/* User controls */}
       <div className="button-controls">
         Size:
-        <button onClick={() => setSize('s')}>Small</button>
-        <button onClick={() => setSize('m')}>Medium</button>
-        <button onClick={() => setSize('l')}>Large</button>
-        <button onClick={() => setSize('xl')}>X-Large</button>
+        <button onClick={() => setSize('s')} disabled={size === 's' ? true : false}>Small</button>
+        <button onClick={() => setSize('m')} disabled={size === 'm' ? true : false}>Medium</button>
+        <button onClick={() => setSize('l')} disabled={size === 'l' ? true : false}>Large</button>
+        <button onClick={() => setSize('xl')} disabled={size === 'xl' ? true : false}>X-Large</button>
       </div>
       <div className="button-controls">
         Feather Count:
@@ -74,11 +101,11 @@ function App() {
       {/* Generated display based on user selections above */}
       <h3 className="button-controls">Enjoy your turkey</h3>
       <PictureDisplay
-        size={size}
+        sizeClass={sizeClass}
         featherCount={featherCount}
         featherColors={featherColors}
       />
-      <Message size={size} />
+      <Message sizeClass={sizeClass} featherCount={featherCount} />
     </>
   );
 }

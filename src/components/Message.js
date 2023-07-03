@@ -1,35 +1,26 @@
 import { useEffect, useState } from "react";
 
-function Message({ size }) {
+function Message({ sizeClass, featherCount }) {
 
-  const [sizeClass, setSizeClass] = useState('')
-  useEffect(() => {
-    console.log('Message', size);
 
-    let cname = '';
-    switch (size) {
-        case 'm':
-            cname = 'medium';
-            break;
-        case 'l':
-            cname = 'large';
-            break;
-        case 'xl':
-            cname = 'xlarge';
-            break;
-        default:
-            cname = 'small';
-            break;
-    }
-    //console.log(cname);
+  const [message, setMessage] = useState('');
 
-    setSizeClass(cname);
+  useEffect(() =>{
+      if (featherCount <= 0)
+          setMessage('Oh my! Your bird is naked!');
+      else if (featherCount >= 10) {
+          setMessage('Full turkey!');
+      } else {
+          setMessage('Coming along...');
+      }
+  }, [featherCount])
 
-  }, [size])
+
+  
 
   return (
     <div className={`message ${sizeClass}`}>
-      (Oh my! Your bird is naked!)
+      {message}
     </div>
   );
 };
